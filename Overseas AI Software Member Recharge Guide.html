@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海外AI软件会员充值指南</title>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: #e9ecef;
+            --text-primary: #2c3e50;
+            --text-secondary: #5a6c7d;
+            --text-tertiary: #7d8a96;
+            --link-color: #3498db;
+            --link-hover: #2980b9;
+            --border-color: #dee2e6;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 3px 6px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.12);
+            --shadow-lg: 0 10px 20px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.10);
+            --accent-color: #6c5ce7;
+            --success-color: #00b894;
+            --warning-color: #fdcb6e;
+            --danger-color: #d63031;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-tertiary: #3a3a3a;
+            --text-primary: #e8e8e8;
+            --text-secondary: #b8b8b8;
+            --text-tertiary: #888888;
+            --link-color: #5eb3f6;
+            --link-hover: #7fc4f8;
+            --border-color: #404040;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+            --shadow-md: 0 3px 6px rgba(0,0,0,0.6);
+            --shadow-lg: 0 10px 20px rgba(0,0,0,0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        /* 侧边栏目录 */
+        .toc {
+            position: fixed;
+            left: 20px;
+            top: 80px;
+            width: 260px;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+
+        .toc h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc > ul > li {
+            margin-bottom: 8px;
+        }
+
+        .toc ul ul {
+            margin-left: 15px;
+            margin-top: 5px;
+        }
+
+        .toc a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            padding: 5px 10px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .toc a:hover {
+            color: var(--link-color);
+            background: var(--bg-tertiary);
+        }
+
+        .toc a.active {
+            color: var(--accent-color);
+            background: var(--bg-tertiary);
+            font-weight: 500;
+        }
+
+        /* 主内容区 */
+        .main-content {
+            flex: 1;
+            margin-left: 320px;
+            padding: 40px 60px;
+            max-width: 900px;
+        }
+
+        /* 头部工具栏 */
+        .header-toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.9);
+        }
+
+        [data-theme="dark"] .header-toolbar {
+            background: rgba(26,26,26,0.9);
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .theme-toggle {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-tertiary);
+        }
+
+        /* 标题样式 */
+        h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin: 60px 0 30px;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            color: var(--text-primary);
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h3 {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--text-primary);
+        }
+
+        h4 {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin: 25px 0 15px;
+            color: var(--text-primary);
+        }
+
+        h5 {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: var(--text-primary);
+        }
+
+        h6 {
+            font-size: 1em;
+            font-weight: 600;
+            margin: 15px 0 10px;
+            color: var(--text-secondary);
+        }
+
+        /* 段落和文本 */
+        p {
+            margin: 15px 0;
+            color: var(--text-primary);
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--link-hover);
+            text-decoration: underline;
+        }
+
+        strong {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        em {
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        mark {
+            background: rgba(255, 235, 59, 0.3);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        /* 列表样式 */
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 8px 0;
+            color: var(--text-primary);
+        }
+
+        /* 引用块 */
+        blockquote {
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 0 8px 8px 0;
+        }
+
+        blockquote p {
+            margin: 5px 0;
+            color: var(--text-secondary);
+        }
+
+        /* 代码块 */
+        code {
+            background: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+        }
+
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--bg-primary);
+            box-shadow: var(--shadow-sm);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: var(--bg-secondary);
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: var(--bg-secondary);
+        }
+
+        /* 图片样式 */
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* iframe样式 */
+        iframe {
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+            margin: 20px 0;
+        }
+
+        /* 分隔线 */
+        hr {
+            border: none;
+            border-top: 2px solid var(--border-color);
+            margin: 30px 0;
+        }
+
+        /* 脚注 */
+        .footnotes {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .footnotes ol {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        sup {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* 星级评分 */
+        .rating {
+            color: #ffd700;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .toc {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 40px 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .main-content > * {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-tertiary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="header-toolbar">
+        <div class="header-title">📚 海外AI软件会员充值指南</div>
+        <button class="theme-toggle" onclick="toggleTheme()">🌓 切换主题</button>
+    </div>
+
+    <div class="container">
+        <nav class="toc">
+            <h3>目录导航</h3>
+            <ul>
+                <li><a href="#background">1. 背景</a></li>
+                <li>
+                    <a href="#methods">2. 方法</a>
+                    <ul>
+                        <li><a href="#google-play">2.1 Google Play</a></li>
+                        <li><a href="#apple-gift">2.2 Apple Gift Card</a></li>
+                        <li><a href="#third-party">2.3 第三方代充、租号</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <h1>海外AI软件会员充值指南</h1>
+            
+            <h2 id="background">1. 背景</h2>
+            <p>国外ai软件，如gpt，claude，gemini的会员充值均无法使用国内银联卡绑定支付。它们都拒绝为<strong>中国大陆</strong>提供服务，特别是claude（官网上明确表示抵制大陆）。<strong>那该如何充值其plus及pro会员呢</strong>？</p>
+            
+            <hr>
+            
+            <h2 id="methods">2. 方法</h2>
+            <p>通过搜集资料和亲身实践，这里总结了几种方法。点击可跳转至具体操作。</p>
+            
+            <h3><a href="#google-play">法一： 通过visa卡或master卡绑定Google Play充值</a></h3>
+            <p>推荐指数：<span class="rating">⭐⭐⭐⭐⭐</span></p>
+            <p>目前，这是相对来说最稳妥、风险最低、最推荐的方法，只是初次办理时间长一些，步骤多一些。而且你的visa卡之后还能绑定各种软件的支付，如Paypel，Steam等。推荐！</p>
+            
+            <h3><a href="#apple-gift">法二： 通过外区apple store礼品卡充值</a></h3>
+            <p>苹果用户：<span class="rating">⭐⭐⭐⭐</span> &nbsp;&nbsp;&nbsp; 安卓、鸿蒙：<span class="rating">⭐⭐</span></p>
+            <p>如果你是苹果用户，可以尝试这种方法。如果是按照视频教程在支付宝购买，有中等被封号的风险；如果通过苹果官网购买礼品卡，轻度风险。</p>
+            
+            <h3><a href="#third-party">法三： 找第三方平台代充、租号</a></h3>
+            <p>推荐指数：<span class="rating">⭐⭐⭐</span></p>
+            <p>如果你不是经常使用会员，图方便和拼车省钱，可以选择这种方法。如果是直接溢价代充，轻度至高度风险，取决于商家；如果是单独购买一个商家的会员账号或拼车，一般商家会有保障，封号后会提供新账号。</p>
+            
+            <hr>
+            
+            <h3 id="google-play"><mark>2.1 Google Play</mark></h3>
+            
+            <h4><em>step 1:</em></h4>
+            <h5>申请任意一家银行的visa卡或master卡</h5>
+            <p>可在各大银行的APP内线上选择和申请，个人推荐<strong>中行</strong>【长城跨境通国际借记卡】和<strong>工行</strong>【宇宙星座信用卡】，其中<strong>工行</strong>有校园版，大学生可免费申请，有效期内无年费。申领后到当地网点激活。</p>
+            
+            <img src="https://github.com/cherry384719/picx-images-hosting/raw/master/image.4jofp57mjc.webp" style="width: 60%;">
+            <img src="https://github.com/cherry384719/picx-images-hosting/raw/master/image.2yyopxewgy.webp" style="width: 60%;">
+            
+            <blockquote>
+                <p><strong>工行</strong>【宇宙星座信用卡】申请成功后会发给你两张卡，一张是银联卡(国内用)，一张是visa卡(国外用)，后续绑定Google Play以及付款都要是visa卡。两张卡的RMB余额是共通的，但是后面购汇是在visa卡中购买美元等其他外币。美元只在visa卡中，不互通。</p>
+            </blockquote>
+            
+            <hr>
+            
+            <h4><em>step 2:</em></h4>
+            <h5>充值RMB到卡上<sup>[1]</sup>，然后在相应银行的APP上进行购汇。</h5>
+            
+            <p>以<strong>工行</strong>【宇宙星座信用卡校园版<sup>[2]</sup>】为例演示：</p>
+            <ul>
+                <li>下载【中国工商银行】APP</li>
+                <li>登录账号，绑定你申请的两张卡</li>
+                <li>在首页找到【结售汇】并进入</li>
+            </ul>
+            
+            <img src="https://github.com/cherry384719/picx-images-hosting/raw/master/6915ec02db1b9c02b57954b6f36565b0.77dvzjx90j.webp" style="width: 30%;">
+            
+            <ul>
+                <li>点击你要购入的货币</li>
+            </ul>
+            
+            <img src="https://github.com/cherry384719/picx-images-hosting/raw/master/9b12aa8868d57e43aa41579459ce9aaf.39liivfmd6.webp" style="width: 30%;">
+            
+            <ul>
+                <li>点击后会弹窗，点击【无需取现】，然后等待一会</li>
+            </ul>
+            
+            <img src="https://github.com/cherry384719/picx-images-hosting/raw/master/be3949c0f65fba2045a11177fa06d898.1sfdh4bhmh.webp" style="width: 30%;">
+            
+            <ul>
+                <li>选择交易账户，要选你的visa卡；购汇用途随便选一个合理的，比如海外购物</li>
+            </ul>
+            
+            <img src="https://github.com/cherry384719/picx-images-hosting/raw/master/1c9ca6542cffda4d4fafd6c266804f0e.58hp98adhf.webp" style="width: 30%;">
+            
+            <blockquote>
+                <p>这里可能会出现一个问题：交易账户只能选择你之前办过的储蓄卡，无法选择visa卡，从而不能购入外币。<br>
+                解决办法：退出至首页面，底部选择【我的】，在左上角有【属地】显示，将属地改为<strong>星座信用卡</strong>激活的地区，然后再重复上面的步骤，应该就能选择visa卡进行购汇。</p>
+            </blockquote>
+            
+            <hr>
+            
+            <h4><em>step 3:</em></h4>
+            <h5>绑定Google Play</h5>
+            
+            <p>手机和电脑都行（默认有Google账号和🪜）</p>
+            <ul>
+                <li>登入Google Play，点击头像，在显示界面点击【付款与订阅】-> 【付款方式】->【添加信用卡或借记卡】</li>
+                <li>填入卡号和CVC三位验证号，地址填大陆（测试过，填国外可能无法绑定成功），进行绑定</li>
+                <li>如果还是无法绑定，再检查一下Google账号的账单地址：
+                    <ul>
+                        <li>手机端
+                            <ul>
+                                <li>在Google浏览器首页点击头像</li>
+                                <li>按照顺序检查和添加地址：【地址和其他信息】-> 【添加地址】-> 填入大陆的地址，保存 -> 选择你刚添加的大陆地址为默认账单地址</li>
+                            </ul>
+                        </li>
+                        <li>电脑端
+                            <ul>
+                                <li>在Google浏览器首页点击头像</li>
+                                <li>点击【管理Google账号】->【付款与订阅】-> 【管理付款方式】->【设置】，在设置中添加一个大陆地址，并设为默认账单地址</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <hr>
+            
+            <h4><em>step 4:</em></h4>
+            <h5>充值会员</h5>
+            
+            <p>只能用手机端</p>
+            <ul>
+                <li>手机端登录Google Play</li>
+                <li>在上面下载想要充值的APP，如GPT、Claude</li>
+                <li>进入APP，通过Google账号登录/ 注册账号</li>
+                <li>点击升级plus/pro会员</li>
+                <li>在弹出的Google Pay支付界面确认即可</li>
+            </ul>
+            
+            <hr>
+            
+            <h4><em>step 5:</em></h4>
+            <h5>后续订阅和管理</h5>
+            
+            <p>你可以很方便的在Google【付款与订阅】中管理你的订阅，订阅到期前充值足够的外币到绑定的visa卡上，可自动扣款续订。</p>
+            <p>由于一般的visa信用卡没有年费，申领也完全免费，推荐办一张。而且示例中的【宇宙星座信用卡校园版】额度为0，无需担心自己逾期，没有征信风险。</p>
+            
+            <hr>
+            
+            <h3 id="apple-gift"><mark>2.2 Apple Gift Card</mark></h3>
+            
+            <blockquote>
+                <p>Apple礼品卡用途：购买数字内容和服务。<br>
+                适用范围：App Store应用和游戏，iTunes音乐和电影，iCloud存储空间，Apple Music、Apple TV+等订阅服务，<strong>应用内购买</strong></p>
+            </blockquote>
+            
+            <h4><em>step 1:</em></h4>
+            <h5>注册或购买一个外区Apple ID，具体方法自行搜索</h5>
+            <p>在Apple Store登录外区ID</p>
+            
+            <hr>
+            
+            <h4><em>step 2:</em></h4>
+            <h5>按照视频购买Apple礼品卡并充值(电脑端观看效果更佳)</h5>
+            
+            <p>视频里是用支付宝，无法保障充值后账号的风险程度，可能会被封号。当然也可以在<a href="https://www.apple.com/shop/gift-cards">苹果礼品卡官网</a>购买礼品卡，但是支付时需要用apple pay、visa卡等。</p>
+            
+            <iframe src="https://player.bilibili.com/player.html?bvid=BV1bwe8zAEVm&page=1&autoplay=0" 
+                    scrolling="no" border="0" frameborder="no" framespacing="0" 
+                    allowfullscreen="true" width="600" height="400">
+            </iframe>
+            
+            <p>在礼品卡充值到Apple Store账号后，使用外区Apple ID在ChatGPT App中完成Plus订阅购买。购买完成后，可以切换回国区Apple ID正常使用手机，ChatGPT Plus订阅会绑定到你的ChatGPT账号(邮箱)，而不是Apple ID。</p>
+            
+            <hr>
+            
+            <h3 id="third-party"><mark>2.3 第三方代充、租号</mark></h3>
+            
+            <p>主要有以下三种途径，价格、风险和整体体验各有不同。</p>
+            
+            <h4>2.3.1 通过淘宝、咸鱼等网店购买代充服务</h4>
+            
+            <ul>
+                <li><em>价格在按正常汇率换算后（20$ = 143￥）左右<sup>[3]</sup></em></li>
+                <li><em>轻度至高度风险，取决于商家</em></li>
+                <li><em>官方网站使用，体验最佳</em></li>
+            </ul>
+            
+            <p>注意要认定【<strong>官方</strong>】和【<strong>代订阅</strong>】关键词，如下图：</p>
+            
+            <img src="https://cherry384719.github.io/picx-images-hosting/image.1hsjpb01uf.webp" style="width: 60%;">
+            
+            <hr>
+            
+            <h4>2.3.2 购买淘宝、咸鱼等网店账号池<sup>[4]</sup>共享服务</h4>
+            
+            <ul>
+                <li><em>价格比按正常汇率换算后低大约50%</em></li>
+                <li><em>无风险或轻度风险，只需注意商家有没有跑路</em></li>
+                <li><em>体验一般，上下文长度相对较短，峰值响应速度不如官网，但胜在日常使用无需魔法</em></li>
+            </ul>
+            
+            <p>这类服务是提供给你一个商家搭建好的网站的账号和密码，登录后可在众多账号（你买的是pro会员，就只能使用pro账号池中的账号）中选择可用的，使用页面与官网1:1还原。</p>
+            
+            <h5>购买商品认准【国内直登】、【无需魔法】等标签</h5>
+            
+            <img src="https://cherry384719.github.io/picx-images-hosting/image.361wmho3ou.webp" style="width: 45%;">
+            
+            <h5>登录网站后的界面，选择可用/空闲账号即可使用</h5>
+            
+            <img src="https://cherry384719.github.io/picx-images-hosting/image.73ua363eo1.webp" style="width: 90%;">
+            
+            <hr>
+            
+            <h4>2.3.3 在专门代充、租号网站购买服务</h4>
+            
+            <ul>
+                <li><em>价格不确定，不同商品价格对比官网可高可低，其中GPT代充比官网贵</em></li>
+                <li><em>中度风险，均为中国境内备案网站，被封后还是有一定保障的</em></li>
+                <li><em>如果是代充，在官方网站使用，体验最佳；如果是合租，体验一般</em></li>
+            </ul>
+            
+            <blockquote>
+                <p>以下网站能够充值绝大多数国外软件会员，除了常见的ai软件充值，还有YouTube、Netflix、Disney+和Spotify等充值服务。</p>
+            </blockquote>
+            
+            <h5>合租平台对比</h5>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>平台名</th>
+                        <th>成立时间</th>
+                        <th>是否备案</th>
+                        <th>支持镜像</th>
+                        <th>AI品类丰富</th>
+                        <th>售后服务</th>
+                        <th>是否稳定</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="https://nf.video/UuxUr">银河录像局</a></td>
+                        <td>2019年</td>
+                        <td>✅浙ICP备</td>
+                        <td>✅</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>快速响应</td>
+                        <td>很稳定</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://www.naifeistation.com/i/12yuLF">星际放映厅</a></td>
+                        <td>2023年</td>
+                        <td>✅浙ICP备</td>
+                        <td>❌</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>正常</td>
+                        <td>稳定</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://universalbus.cn/?s=eix8vuhuKt">环球巴士</a></td>
+                        <td>2023年</td>
+                        <td>✅浙ICP备</td>
+                        <td>✅</td>
+                        <td>⭐⭐</td>
+                        <td>较好</td>
+                        <td>很稳定</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://familypro.io?invite=NKbd6f20">Family Pro</a></td>
+                        <td>2024年</td>
+                        <td>/</td>
+                        <td>❌</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>正常</td>
+                        <td>稳定</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <hr>
+            
+            <h5>1.<a href="https://nf.video/UuxUr">银河录像局</a></h5>
+            
+            <p><strong>银河录像局</strong>成立于 2019 年，由杭州崇宇信息科技有限公司运营，总部位于杭州市余杭区。平台专注于流媒体与 AI 工具的合租共享服务，涵盖 Netflix、Disney+、ChatGPT、Claude、Midjourney、YouTube 等热门资源。</p>
+            
+            <img src="https://cherry384719.github.io/picx-images-hosting/image.3yes4b6bwo.webp" style="width: 90%;">
+            
+            <h6><strong>选择商品，进入购买界面，可在优惠码处填入<code>ljx</code>获取优惠</strong></h6>
+            
+            <img src="https://cherry384719.github.io/picx-images-hosting/image.7zqripftim.webp" style="width: 90%;">
+            <img src="https://cherry384719.github.io/picx-images-hosting/image.5c1b8cpvkk.webp" style="width: 90%;">
+            
+            <hr>
+            
+            <h5>2.<a href="https://www.naifeistation.com/i/12yuLF">星际放映厅</a></h5>
+            
+            <p><strong>星际放映厅</strong>成立于 2023 年，平台已获得浙江省ICP备案认证，定位于流媒体和 AI 工具合租的专业平台。秉持"现号秒发、安全稳定、物美价廉"的理念，星际放映厅提供 ChatGPT Plus、Netflix、Disney+ 等热门服务的共享租赁。</p>
+            
+            <img src="https://cherry384719.github.io/picx-images-hosting/image.6bheljwbou.webp" style="width: 90%;">
+            <img src="https://cherry384719.github.io/picx-images-hosting/image.9o04fxdo4k.webp" style="width: 90%;">
+            <img src="https://cherry384719.github.io/picx-images-hosting/image.4ub9jt0fe0.webp" style="width: 90%;">
+            
+            <hr>
+            
+            <h5>3.<a href="https://universalbus.cn/?s=eix8vuhuKt">环球巴士</a></h5>
+            
+            <p><strong>环球巴士</strong>前身为"奈飞站"（Netflixstation），于 2023 年 2 月升级改版推出。作为经验丰富的老牌流媒体合租平台升级之作，环球巴士将服务重点拓展至 AI 工具领域，提供 ChatGPT Plus 合租共享服务及国内镜像版支持。</p>
+            
+            <img src="https://cherry384719.github.io/picx-images-hosting/image.491lxicy40.webp" style="width: 90%;">
+            
+            <h6><strong>选择商品，进入购买界面，可在优惠码处填入<code>ljx888</code>获取优惠</strong></h6>
+            
+            <img src="https://cherry384719.github.io/picx-images-hosting/image.8dx79mfdmu.webp" style="width: 90%;">
+            
+            <hr>
+            
+            <h5>4.<a href="https://familypro.io?invite=NKbd6f20">Family Pro</a></h5>
+            
+            <p>FamilyPro是一个专注于拼单购买订阅的网站，包含流媒体工具、AI工具、学习工具等全网热门服务，例如ChatGPT、Netflix、多邻国、迪士尼+等。无需自己找人拼团，即买即用。一起分担费用，最高节省80%订阅费用！</p>
+            
+            <img src="https://cherry384719.github.io/picx-images-hosting/image.5fkx64lj03.webp" style="width: 90%;">
+            
+            <div class="footnotes">
+                <hr>
+                <ol>
+                    <li id="fn1">可通过该银行的储蓄卡转账至星座信用卡，也可以去银行现金充值。</li>
+                    <li id="fn2">校园版跟普通版不同的点：额度为0，也就是无法透支信用，必须要先充值后付款，与一般的信用卡使用方式相反，可以就当做一张储蓄卡来用。</li>
+                    <li id="fn3">你可能会找到比正常充值价格（143￥）便宜的商品。这是因为在其他国家，汇率会比较低，比如印度、尼日利亚等，其中尼日利亚区是购买汇率最低的，只需大约46￥（当地货币折算后）即可购买20$的会员。因此，商家通过便宜的国外充值渠道赚汇率差。</li>
+                    <li id="fn4">账号池：商家购买/注册许多会员账号，然后搭建一个共享账号网站，按官网1:1构建交互网页，购买相应服务可使用相应账号池中的账号。</li>
+                </ol>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 主题切换功能
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // 初始化主题
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            // 目录高亮功能
+            const tocLinks = document.querySelectorAll('.toc a');
+            const sections = document.querySelectorAll('h2[id], h3[id], h4[id]');
+            
+            function highlightToc() {
+                let current = '';
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                tocLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', highlightToc);
+            highlightToc();
+        });
+    </script>
+</body>
+</html>
